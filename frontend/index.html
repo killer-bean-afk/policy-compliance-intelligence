@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Compliance Intelligence Platform</title>
+  <meta name="description" content="AI-Powered Multi-Agent Policy Compliance Intelligence & Evidence Retrieval System">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-logo">🛡️</div>
+      <div class="brand-text">
+        <h1>Policy Compliance Intelligence</h1>
+        <p>Multi-Agent Evidence Grounded Assessment System</p>
+      </div>
+    </div>
+    <div class="system-status">
+      <span class="status-dot"></span>
+      <span>Multi-Agent System Online (5 Agents Ready)</span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-analyzer')">🎯 Scenario Analyzer</button>
+    <button class="tab-btn" onclick="switchTab('tab-workflow')">🤖 Multi-Agent Workflow</button>
+    <button class="tab-btn" onclick="switchTab('tab-knowledge')">📚 Knowledge Base Explorer</button>
+    <button class="tab-btn" onclick="switchTab('tab-evaluation')">📊 Benchmark Evaluation</button>
+    <button class="tab-btn" onclick="switchTab('tab-audit')">📄 Compliance Audit Report</button>
+  </nav>
+
+  <main class="container">
+
+    <!-- TAB 1: Scenario Compliance Analyzer -->
+    <section id="tab-analyzer" class="tab-content active">
+      <div class="card">
+        <h2 class="card-title">🔍 Submit Business Scenario or Compliance Query</h2>
+        
+        <div class="form-group">
+          <label class="form-label">Enter Business Scenario / Operational Activity Details:</label>
+          <textarea id="scenario-input" class="form-control" placeholder="e.g. We are onboarding a foreign politician (PEP) for an institutional investment account without an EDD dossier..."></textarea>
+          
+          <div class="preset-chips">
+            <span class="chip" onclick="loadPreset('pep')">⚡ PEP Onboarding (KYC/AML)</span>
+            <span class="chip" onclick="loadPreset('hipaa')">⚡ PHI SaaS Cloud Sharing (HIPAA)</span>
+            <span class="chip" onclick="loadPreset('sec')">⚡ Code Upload to Public AI (InfoSec)</span>
+            <span class="chip" onclick="loadPreset('wire')">⚡ $250k Foreign Wire Transfer (OFAC)</span>
+            <span class="chip" onclick="loadPreset('fcpa')">⚡ $500 Dinner for Government Inspector (FCPA)</span>
+            <span class="chip" onclick="loadPreset('crypto')">⚡ Monero Unhosted Wallet (Crypto)</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <div class="form-group" style="flex: 1; margin-bottom: 0;">
+            <label class="form-label">Policy Category Filter (Optional):</label>
+            <select id="category-filter" class="form-control">
+              <option value="">All Categories</option>
+              <option value="KYC / AML">KYC / AML</option>
+              <option value="Data Privacy & Healthcare">Data Privacy & Healthcare</option>
+              <option value="Information Security">Information Security</option>
+              <option value="Corporate Governance">Corporate Governance</option>
+              <option value="Financial Operations">Financial Operations</option>
+            </select>
+          </div>
+          
+          <button id="btn-analyze" class="btn btn-primary" style="margin-top: 1.25rem;" onclick="runComplianceAnalysis()">
+            <span>⚡ Run Multi-Agent Analysis</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Analysis Results Box -->
+      <div id="results-container" style="display: none;">
+        <!-- Executive Summary Banner -->
+        <div class="card" style="border-left: 4px solid var(--primary);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+            <div>
+              <span id="badge-status" class="badge">COMPLIANT</span>
+              <span id="badge-risk" class="badge badge-low" style="margin-left: 0.5rem;">LOW RISK</span>
+            </div>
+            <span id="text-latency" style="font-size: 0.8rem; color: var(--text-dim);">Latency: 0 ms</span>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Executive Compliance Assessment Summary</h3>
+          <p id="exec-summary-text" style="color: var(--text-muted); font-size: 0.95rem;"></p>
+        </div>
+
+        <div class="results-grid">
+          <!-- Left Column: Retrieved Evidence & Clause Analysis -->
+          <div>
+            <div class="card">
+              <h3 class="card-title">📖 Retrieved Policy Evidence Clauses</h3>
+              <div id="evidence-clauses-list"></div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">📋 Clause-by-Clause Compliance Findings</h3>
+              <div id="clause-findings-list"></div>
+            </div>
+          </div>
+
+          <!-- Right Column: Risk Items & Remediation Plan -->
+          <div>
+            <div class="card">
+              <h3 class="card-title">⚠️ Identified Gaps & Risk Assessment</h3>
+              <div id="risk-items-list"></div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">✅ Recommended Remediation Actions</h3>
+              <div id="remediation-list"></div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">🔍 Evidence Grounding Verification</h3>
+              <div id="validation-proof-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Multi-Agent Workflow Inspector -->
+    <section id="tab-workflow" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">🤖 Multi-Agent Compliance Workflow Architecture</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Demonstrates real-time Agent-to-Agent (A2A) communication, workflow handoffs, and evidence validation.
+        </p>
+
+        <div class="agent-flow-container">
+          <div class="agent-node active">
+            <div class="icon">🔍</div>
+            <div class="name">Policy Retrieval</div>
+            <div class="role">Vector/BM25 Search</div>
+          </div>
+          <div class="flow-connector active"></div>
+          <div class="agent-node active">
+            <div class="icon">📋</div>
+            <div class="name">Compliance Analysis</div>
+            <div class="role">Clause Checker</div>
+          </div>
+          <div class="flow-connector active"></div>
+          <div class="agent-node active">
+            <div class="icon">⚠️</div>
+            <div class="name">Risk Assessment</div>
+            <div class="role">Penalty & Gap Eval</div>
+          </div>
+          <div class="flow-connector active"></div>
+          <div class="agent-node active">
+            <div class="icon">🛡️</div>
+            <div class="name">Policy Validation</div>
+            <div class="role">Grounding Auditor</div>
+          </div>
+          <div class="flow-connector active"></div>
+          <div class="agent-node active">
+            <div class="icon">✅</div>
+            <div class="name">Recommendation</div>
+            <div class="role">Remediation Steps</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">💬 Live Agent-to-Agent (A2A) Communication Trace</h3>
+        <div id="a2a-console" class="console-box">
+          <div class="console-entry">
+            <span class="timestamp">[00:00.000]</span>
+            <span class="sender">System</span>
+            <span class="arrow">➔</span>
+            <span class="receiver">A2AMessageBus</span>: System initialized. Awaiting compliance scenario submission...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Knowledge Base Explorer -->
+    <section id="tab-knowledge" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">📚 Compliance Knowledge Base Explorer</h2>
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+          <input id="kb-search-input" type="text" class="form-control" placeholder="Search knowledge base by clause ID, keyword, or requirement..." onkeyup="searchKB()">
+          <button class="btn btn-secondary" onclick="loadKnowledgeBase()">Refresh KB</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Clause ID</th>
+                <th>Policy Document</th>
+                <th>Category</th>
+                <th>Section</th>
+                <th>Mandatory</th>
+                <th>Requirement Text</th>
+              </tr>
+            </thead>
+            <tbody id="kb-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Benchmark Evaluation Dashboard -->
+    <section id="tab-evaluation" class="tab-content">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <div>
+            <h2 class="card-title" style="margin-bottom: 0.2rem;">📊 Compliance Quality & Evaluation Suite</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Quantitative benchmark evaluation over ground-truth compliance test scenarios.</p>
+          </div>
+          <button class="btn btn-primary" onclick="runBenchmarkEvaluation()">⚡ Run Benchmark Evaluation</button>
+        </div>
+
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div id="metric-precision" class="metric-value">--</div>
+            <div class="metric-label">Precision @ K</div>
+          </div>
+          <div class="metric-card">
+            <div id="metric-recall" class="metric-value">--</div>
+            <div class="metric-label">Recall @ K</div>
+          </div>
+          <div class="metric-card">
+            <div id="metric-grounding" class="metric-value">--</div>
+            <div class="metric-label">Grounding Accuracy</div>
+          </div>
+          <div class="metric-card">
+            <div id="metric-status-acc" class="metric-value">--</div>
+            <div class="metric-label">Status Classification Acc</div>
+          </div>
+          <div class="metric-card">
+            <div id="metric-risk-prec" class="metric-value">--</div>
+            <div class="metric-label">Risk Precision</div>
+          </div>
+          <div class="metric-card">
+            <div id="metric-latency" class="metric-value">--</div>
+            <div class="metric-label">Avg Latency (ms)</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Benchmark ID</th>
+                <th>Scenario Title</th>
+                <th>Category</th>
+                <th>Expected Status</th>
+                <th>Predicted Status</th>
+                <th>Grounding Score</th>
+                <th>Latency</th>
+              </tr>
+            </thead>
+            <tbody id="eval-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: Compliance Audit Report -->
+    <section id="tab-audit" class="tab-content">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2 class="card-title" style="margin-bottom: 0;">📄 Printable Compliance Audit Report</h2>
+          <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Audit Report</button>
+        </div>
+        
+        <div id="audit-report-content" style="background: rgba(11, 15, 25, 0.9); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <p style="color: var(--text-muted); text-align: center;">No scenario evaluated yet. Please run an analysis in the Scenario Analyzer tab to view the formatted compliance audit report.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JavaScript App Logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
